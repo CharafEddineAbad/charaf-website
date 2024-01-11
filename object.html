@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Objects</title>
+</head>
+
+<body>
+  <p>PCR Game !!</p>
+   <button onclick="
+    gameChoice('Paper');
+  ">Paper</button>
+  <button onclick="
+    gameChoice('Cisor');
+  ">Cisor</button>
+  <button onclick="
+    gameChoice('Rock');
+  ">Rock</button>
+  <button onclick="
+    gameResult.Loss=0;
+    gameResult.Wins=0;
+    gameResult.Tie=0;
+    localStorage.removeItem('score');
+  ">Reset Score</button>
+  <script>
+    let gameResult = JSON.parse(localStorage.getItem('score')) || {
+        Wins: 0,
+        Loss: 0,
+        Tie: 0
+      }; 
+    let userChoice = '';
+    function gameChoice(userChoice) {
+      let i = Math.random();
+      let computerChoice='';
+      let result = '';
+      if (i >= 0 && i < 1 / 3) {
+        computerChoice = 'Paper';
+        if (userChoice === 'Paper') {
+          result = 'Tie';
+        }
+        else if (userChoice === 'Cisor') {
+          result = 'You have luck , you win';
+        }
+        else if (userChoice === 'Rock') {
+          result = 'That mean that I beat you bitch !!!';
+        }
+      }
+      else if (i >= 1 / 3 && i <= 2 / 3) {
+        computerChoice = 'Cisor';
+        if (userChoice === 'Paper') {
+          result = 'That mean that I beat you bitch !!!';
+        }
+        else if (userChoice === 'Cisor') {
+          result = 'Tie';
+        }
+        else if (userChoice === 'Rock') {
+          result = 'You have luck , you win';
+        }
+      }
+      else if (i > 2 / 3 && i <= 1) {
+        computerChoice = 'Rock';
+        if (userChoice === 'Paper') {
+          result = 'You have luck , you win';
+        }
+        else if (userChoice === 'Cisor') {
+          result = 'That mean that I beat you bitch !!!';
+        }
+        else if (userChoice === 'Rock') {
+          result = 'Tie';
+        }
+      }
+
+      if (result === 'Tie')
+        gameResult.Tie++;
+      else if (result === 'That mean that I beat you bitch !!!')
+        gameResult.Loss++;
+      else if (result === 'You have luck , you win')
+        gameResult.Wins++;
+
+      alert(`You chose ${userChoice} and I chose ${computerChoice} . ${result}\nWins: ${gameResult.Wins}, loss: ${gameResult.Loss}, tie: ${gameResult.Tie}`);
+      localStorage.setItem('score', JSON.stringify(gameResult));
+    }
+    console.log('HelLo'.toLowerCase());
+  </script>
+</body>
+
+</html>
